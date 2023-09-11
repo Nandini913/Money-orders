@@ -6,7 +6,7 @@ const login  = require('./APIS/login');
 const deposit = require('./APIS/deposit');
 const withdraw = require('./APIS/withdraw');
 const transfer = require('./APIS/transfer');
-app.use(express.static('public'));
+app.use(express.static('layouts'));
 app.use(express.json());
 app.use('/register' , register);
 app.use('/login',login);
