@@ -15,10 +15,12 @@ router.post('/', async (req, res) => {
         const hash_pass = await bcrypt.hash(password, 10);
         const result = await client.query("Select max(user_id) from users");
         const user_id = ((parseInt(result.rows[0].max))?parseInt(result.rows[0].max):0) + 1;;
-        const query='Insert into users (user_id, username, hash_pass , email) values ($1,$2,$3,$4)'
-        const values = [user_id,username,hash_pass,email]
-        await client.query(query, values);
-        res.status(201).json({ message: 'User registered successfully' });
+        const query={
+                text : 'Insert into users (user_id, username, hash_pass , email) values ($1,$2,$3,$4)',
+                values : [user_id,username,hash_pass,email]
+        }
+        await client.query(query);
+        res.sendFile(path.join(__dirname,'../layouts/login.html'))
 });
 
 module.exports = router;
