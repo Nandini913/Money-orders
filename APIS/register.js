@@ -5,11 +5,9 @@ const {client} = require("../databaseConn");
 const path = require('path');
 
 router.use(express.urlencoded({ extended: true }));
-router.use(express.static(path.join(__dirname , '../layouts')));
-router.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname , '../layouts/register.html'));
-});
-router.post('/', async (req, res) => {
+
+
+const registerApi = async (req, res) => {
 
         const { username, password ,email} = req.body;
         const hash_pass = await bcrypt.hash(password, 10);
@@ -21,6 +19,8 @@ router.post('/', async (req, res) => {
         }
         await client.query(query);
         res.sendFile(path.join(__dirname,'../layouts/login.html'))
-});
+};
+
+router.post('/', registerApi);
 
 module.exports = router;

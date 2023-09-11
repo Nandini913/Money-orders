@@ -4,10 +4,7 @@ const router = express.Router();
 const {client} = require("../databaseConn");
 const path = require('path');
 router.use(express.urlencoded({ extended: true }));
-router.use(express.static(path.join(__dirname , '../layouts')));
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname , '../layouts/transactionPage.html'));
-});
+
 
 router.post('/',async(req,res)=>{
     const {toUser , amount} = req.body;

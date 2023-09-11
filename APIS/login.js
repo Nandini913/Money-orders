@@ -8,11 +8,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 router.use(express.urlencoded({ extended: true }));
-router.use(express.static(path.join(__dirname , '../layouts')));
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname , '../layouts/login.html'));
-});
-router.post('/', async (req, res)=> {
+
+const loginApi = async (req, res)=> {
 
     const {username , password} = req.body;
     const query = 'Select hash_pass from users where username = $1'
@@ -43,7 +40,7 @@ router.post('/', async (req, res)=> {
     } catch (error) {
         console.error ('Error in login:', error);
     }
-
-    });
+}
+router.post('/',loginApi);
 
 module.exports = router;

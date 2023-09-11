@@ -1,14 +1,7 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 const {client} = require("../databaseConn");
-const path = require('path');
 router.use(express.urlencoded({ extended: true }));
-router.use(express.static(path.join(__dirname , '../layouts')));
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname , '../layouts/transactionPage.html'));
-});
-
 router.post('/',async(req,res)=>{
     const {fromUser , amount} = req.body;
     const result = await client.query('select max(transactionId) from transaction');
