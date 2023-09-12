@@ -1,13 +1,10 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 const {client} = require("../databaseConn");
-const path = require('path');
 router.use(express.urlencoded({ extended: true }));
-
-
 router.post('/',async(req,res)=>{
-    const {toUser , amount} = req.body;
+    const {toUser,amount} = req.body;
+    console.log("user : "+ toUser + amount);
     const result = await client.query('select max(transactionId) from transaction');
     const maxId = ((parseInt(result.rows[0].max))?parseInt(result.rows[0].max):0)
     const transId = maxId + 1;
@@ -19,6 +16,5 @@ router.post('/',async(req,res)=>{
 
     await client.query(query);
     console.log('Deposit successful');
-    res.send(amount + "Deposited");
 });
 module.exports = router;
