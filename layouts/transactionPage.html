@@ -8,6 +8,12 @@
             --bg-secondary-color: #f3c518;
         }
 
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -16,11 +22,28 @@
             background-color: var(--bg-primary-color);
         }
 
+        input[type="text"]::placeholder {
+            text-align: center;
+        }
+
         h1 {
             color: white;
         }
+
+        .title {
+            width: 100%;
+            background: black;
+            height: 80px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        table tr {
+            border: 1px solid black;
+            font-size: 1.5rem;
+        }
+
         select {
-            /* styling */
             background-color: white;
             display: inline-block;
             font: inherit;
@@ -28,14 +51,16 @@
             padding: 0.5em 1.5em 0.5em 1em;
             margin: 0;
             font-size: 1rem;
-            width: 90%;
+            width: 100%;
             height: 2.5rem;
             border-radius: 1rem;
             border: none;
         }
-        option{
+
+        option {
             font-size: 1rem;
         }
+
         .grid-container {
             display: grid;
             width: 95%;
@@ -50,17 +75,28 @@
             padding: 1.25rem;
             font-size: 1.875rem;
             text-align: center;
-            border-radius : 0.75rem;
+            border-radius: 0.75rem;
         }
 
         .Transactions {
             grid-row: 1/4;
+            place-self: center;
         }
 
         .User-Amount {
-            display: grid;
-            grid-template-columns: auto auto;
-            text-align: left;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .User-Amount div {
+            font-size: x-large;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .history {
@@ -75,42 +111,42 @@
             border: none;
         }
 
-        label{
+        label {
             font-size: smaller;
         }
 
-        .primary-btn{
+        .primary-btn {
             width: 50%;
         }
 
-        .primary-btn:hover{
+        .primary-btn:hover {
             background-color: var(--bg-primary-color);
-            color:#ffff;
+            color: #ffff;
         }
     </style>
     <title>Transactions</title>
 </head>
 <body>
-<h1 class="Title">Money Ordering Actions</h1>
 
+<div class="title"><h1>Money Ordering Actions</h1></div>
 <div class="grid-container">
-    <div class="Transactions"><h2>Transaction History</h2><br>
-        <div class="history">
-            <table id="tableData" border="1|0">
-                <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>From User</th>
-                    <th>To User</th>
-                    <th>Amount</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Table data will be inserted here -->
-                </tbody>
-            </table>
-        </div>
+
+    <div class="Transactions"><h2>Transaction History</h2>
+        <table id="tableData" border="1">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>From User</th>
+                <th>To User</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Table data will be inserted here -->
+            </tbody>
+        </table>
     </div>
+
     <div class="Deposit"><h4>Deposit Amount</h4>
         <form action="/deposit" method="post">
             <div class="User-Amount">
@@ -123,7 +159,6 @@
                     <input type="text" name="amount" id="amount1" placeholder="Enter amount">
                 </div>
             </div>
-            <br>
             <div>
                 <input class="primary-btn" type="submit" placeholder="Submit" id="depositAmount">
             </div>
@@ -131,46 +166,42 @@
     </div>
     <div class="Withdraw"><h4>Withdraw Amount</h4>
         <form action="/withdraw" method="post">
-        <div class="User-Amount">
-            <div>
-                <label for="user1">From : </label><br>
-                <select name="fromUser" id="user1"> </select>
+            <div class="User-Amount">
+                <div>
+                    <label for="user1">From : </label><br>
+                    <select name="fromUser" id="user1"> </select>
+                </div>
+                <div>
+                    <label for="amount2">Amount : </label><br>
+                    <input type="text" name="amount" id="amount2" placeholder="Enter amount">
+                </div>
             </div>
             <div>
-                <label for="amount2">Amount : </label><br>
-                <input type="text" name="amount" id="amount2" placeholder="Enter amount">
-            </div>
-        </div>
-        <br>
-        <div>
                 <input class="primary-btn" type="submit" placeholder="Submit" id="withdrawAmount">
-        </div>
+            </div>
         </form>
     </div>
     <div class="Transfer"><h4>Transfer Amount</h4>
         <form action="/transfer" method="post">
-        <div class="User-Amount">
-            <div>
-                <label for="user3">To : </label><br>
-                <select name="toUser" id="user3"> </select>
-            </div>
-            <div>
-                <label for="From-user3">From : </label><br>
-                <select name="fromUser" id="From-user3"> </select>
-            </div>
+            <div class="User-Amount">
+                <div>
+                    <label for="user3">To : </label><br>
+                    <select name="toUser" id="user3"> </select>
+                </div>
+                <div>
+                    <label for="From-user3">From : </label><br>
+                    <select name="fromUser" id="From-user3"> </select>
+                </div>
 
-        </div>
-        <br>
-        <div>
-            <label for="amount3">Amount : </label><br>
-            <input type="text" name="amount" id="amount3" placeholder="Enter amount">
-        </div>
-        <br>
-        <div>
+            </div>
+            <div>
+                <label for="amount3">Amount : </label><br>
+                <input type="text" name="amount" id="amount3" placeholder="Enter amount">
+            </div>
+            <div>
                 <input class="primary-btn" id="transferAmount" type="submit" placeholder="Submit">
-
-        </div>
-    </form>
+            </div>
+        </form>
     </div>
 
 </div>

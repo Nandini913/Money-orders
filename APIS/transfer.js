@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {client} = require("../databaseConn");
+router.use (express.static ("./layouts"))
 router.use(express.urlencoded({ extended: true }));
 router.post('/',async(req,res)=>{
     const {fromUser , toUser , amount} = req.body;
@@ -14,6 +15,6 @@ router.post('/',async(req,res)=>{
         values : [transId ,'Transfer',fromUser,toUser,amount]
     }
     await client.query(query);
-    res.send(amount+"Transferred");
+    res.redirect('./transactionPage.html')
 });
 module.exports = router;
