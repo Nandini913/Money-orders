@@ -10,7 +10,7 @@ router.post('/',async(req,res)=>{
 
     const query = {
         text : 'Insert into transaction (transactionid, type, fromuser, touser, amount) values ($1,$2,$3,$4,$5)',
-        value : [transId ,'Withdraw',fromUser,'-',amount]
+        values : [transId ,'Withdraw',fromUser,'-',amount]
     }
 
     await client.query(query);

@@ -87,8 +87,6 @@
             background-color: var(--bg-primary-color);
             color:#ffff;
         }
-
-        .
     </style>
     <title>Transactions</title>
 </head>
@@ -98,10 +96,19 @@
 <div class="grid-container">
     <div class="Transactions"><h2>Transaction History</h2><br>
         <div class="history">
-            <div>Type</div>
-            <div>From Username</div>
-            <div>To Username</div>
-            <div>Amount</div>
+            <table id="tableData" border="1|0">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>From User</th>
+                    <th>To User</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Table data will be inserted here -->
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="Deposit"><h4>Deposit Amount</h4>
@@ -109,7 +116,7 @@
             <div class="User-Amount">
                 <div>
                     <label for="user">To : </label><br>
-                    <select name="toUser" id="user"> </select>
+                    <select name="toUser" id="user" class="user1"> </select>
                 </div>
                 <div>
                     <label for="amount1">Amount : </label><br>
@@ -118,7 +125,7 @@
             </div>
             <br>
             <div>
-                <input class="primary-btn" type="submit" placeholder="Submit">
+                <input class="primary-btn" type="submit" placeholder="Submit" id="depositAmount">
             </div>
         </form>
     </div>
@@ -127,7 +134,7 @@
         <div class="User-Amount">
             <div>
                 <label for="user1">From : </label><br>
-                <input type="text" name="fromUser" id="user1" placeholder="Select User">
+                <select name="fromUser" id="user1"> </select>
             </div>
             <div>
                 <label for="amount2">Amount : </label><br>
@@ -136,7 +143,7 @@
         </div>
         <br>
         <div>
-                <input class="primary-btn" type="submit" placeholder="Submit">
+                <input class="primary-btn" type="submit" placeholder="Submit" id="withdrawAmount">
         </div>
         </form>
     </div>
@@ -145,11 +152,11 @@
         <div class="User-Amount">
             <div>
                 <label for="user3">To : </label><br>
-                <input type="text" name="toUser" id="user3" placeholder="Select User">
+                <select name="toUser" id="user3"> </select>
             </div>
             <div>
                 <label for="From-user3">From : </label><br>
-                <input type="text" name="fromUser" id="From-user3" placeholder="Select User">
+                <select name="fromUser" id="From-user3"> </select>
             </div>
 
         </div>
@@ -160,7 +167,7 @@
         </div>
         <br>
         <div>
-                <input class="primary-btn" type="submit" placeholder="Submit">
+                <input class="primary-btn" id="transferAmount" type="submit" placeholder="Submit">
 
         </div>
     </form>

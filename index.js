@@ -7,6 +7,7 @@ const deposit = require('./APIS/deposit');
 const withdraw = require('./APIS/withdraw');
 const transfer = require('./APIS/transfer');
 const users = require('./APIS/fetchUsers');
+const transactionHistory = require('./APIS/transactionHistory');
 const path = require ("path");
 app.use(express.static('layouts'));
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use('/deposit',deposit);
 app.use('/withdraw',withdraw);
 app.use('/transfer',transfer);
 app.use('/users',users);
-
+app.use('/transactionHistory',transactionHistory);
 app.get('/register',(req,res)=>{
     res.sendFile(path.join(__dirname,'../Money-orders/layouts/register.html'))
 })
@@ -26,7 +27,14 @@ app.get('/login',(req,res)=>{
 
 app.get('/deposit',(req,res)=>{
     res.sendFile(path.join(__dirname,'../Money-orders/layouts/transactionPage.html'))
-    res.end();
+})
+
+app.get('/withdraw',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../Money-orders/layouts/transactionPage.html'))
+})
+
+app.get('/transfer',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../Money-orders/layouts/transactionPage.html'))
 })
 app.listen(port , (req,res) => {
     console.log("Server was running on port 3000");
