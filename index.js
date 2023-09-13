@@ -11,12 +11,14 @@ const transfer = require ('./APIS/transfer');
 const users = require ('./APIS/fetchUsers');
 const transactionHistory = require ('./APIS/transactionHistory');
 const authenticate = require ('./APIS/userValidation')
+const transaction = require('./APIS/transactionAPIS')
 app.use ('/auth', authenticate)
 app.use ('/deposit', deposit);
 app.use ('/withdraw', withdraw);
 app.use ('/transfer', transfer);
 app.use ('/users', users);
 app.use ('/transactionHistory', transactionHistory);
+app.use('/transaction',transaction);
 
 app.listen (port, (req, res) => {
     console.log ("Server was running on port 3000");

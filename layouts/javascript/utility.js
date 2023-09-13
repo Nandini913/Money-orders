@@ -8,9 +8,8 @@ function removeChild(){
 document.addEventListener('DOMContentLoaded', () => {
 
     const depositButton = document.getElementById('depositAmount');
-
     const userName = document.getElementById('user');
-    const amount = document.getElementById('amount1');
+    const depositAmount = document.getElementById('amount1');
 
     depositButton.addEventListener('click', (event) => {
 
@@ -18,14 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeChild();
 
-        const user = userName.value;
-        const amt = amount.value;
-        const type = "Deposit";
+        const fromUser = '-';
+        const toUser = userName.value;
+        const amount = depositAmount.value;
+        const transactionType = "Deposit";
 
         // Create a JSON object with the data
-        const data = {user, amt, type};
-
-        fetch('http://localhost:3000/deposit', {
+        const data = {transactionType,fromUser,toUser,amount};
+        console.log(data);
+        fetch('http://localhost:3000/transaction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,14 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeChild();
 
-        const user = withdrawUserName.value;
-        const amt = withdrawAmount.value;
-        const type = "Withdraw";
+
+        const fromUser = withdrawUserName.value;
+        const toUser = '-';
+        const amount = withdrawAmount.value;
+        const transactionType = "Withdraw";
 
         // Create a JSON object with the data
-        const data = {user, amt, type};
+        const data = {transactionType,fromUser,toUser,amount};
 
-        fetch('http://localhost:3000/withdraw', {
+
+        fetch('http://localhost:3000/transaction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(data),
         })
             .then((response) => {
-                console.log(data);
                 if (response.ok) {
                     //reset form
                     withdrawUserName.value = '';
@@ -109,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const toUser = transferToUserName.value;
         const fromUser = transferFromUserName.value;
-        const amt = transferAmount.value;
-        const type = "Transfer";
+        const amount = transferAmount.value;
+        const transactionType = "Transfer";
 
         // Create a JSON object with the data
-        const data = {toUser, fromUser, amt, type};
+        const data = {transactionType,fromUser,toUser,amount};
 
         fetch('http://localhost:3000/transfer', {
             method: 'POST',
