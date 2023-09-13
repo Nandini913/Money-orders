@@ -3,6 +3,8 @@ const app = express ();
 const port = 3000;
 app.use (express.json ());
 app.use (express.static ('layouts'));
+const cookieParser = require ('cookie-parser');
+app.use (cookieParser ());
 const deposit = require ('./APIS/deposit');
 const withdraw = require ('./APIS/withdraw');
 const transfer = require ('./APIS/transfer');

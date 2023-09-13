@@ -2,7 +2,6 @@ const express = require ('express');
 const bcrypt = require ('bcrypt');
 const router = express.Router ();
 const {client} = require ("../databaseConn");
-const path = require ('path');
 router.use (express.urlencoded ({extended : true}));
 router.use (express.static ("./layouts"))
 const jwt = require ('jsonwebtoken');
@@ -15,13 +14,11 @@ router.use (cookieParser ());
 const register = async (req, res) => {
     const {username, password, email} = req.body;
     const hash_pass = await bcrypt.hash (password, 10);
-    const result = await client.query ("Select max(user_id) from users");
-    const user_id = ((parseInt (result.rows[0].max)) ? parseInt (result.rows[0].max) : 0) + 1;
-    const query = {
-        text : 'Insert into users (user_id, username, hash_pass , email) values ($1,$2,$3,$4)',
-        values : [user_id, username, hash_pass, email]
+    const registerUser = {
+        text : 'Insert into users (username, hash_pass , email) values ($1,$2,$3)',
+        values : [username, hash_pass, email]
     }
-    await client.query (query);
+    await client.query (registerUser);
     res.redirect ('/login.html')
 };
 
@@ -31,25 +28,40 @@ router.post ('/register', register);
 const login = async (req, res) => {
 
     const {username, password} = req.body;
-    const query = 'Select hash_pass from users where username = $1'
+
     try {
-        const result = await client.query (query, [username]);
-
-        // Check if a user with the given username was found
-        if (result.rows.length === 0) {
-            return res.status (401).send ('Username not found');
+        if(username === 'admin'){
+            const adminData = 'Select * from users where designation = $1'
+            const admin = await client.query(adminData,[username])
+            const designation = admin.rows[0].designation;
+            const adminPass = admin.rows[0]['hash_pass'];
+            if(password === adminPass){
+                console.log("Matched admin")
+                const token = jwt.sign ({ "username" : adminData.username,"designation" : designation}, secretKey)
+                res.cookie ('jwtAccessToken', token, {httpOnly : true})
+                res.redirect ('./transactionPage.html')
+            }
         }
+        else {
+            const userData = 'Select * from users where username = $1'
+            const user = await client.query (userData, [username]);
 
-        const hashedPassword = result.rows[0]['hash_pass']
-        const passwordMatch = await bcrypt.compare (password, hashedPassword);
+            const designation = user.rows[0].designation;
+            // Check if a user with the given username was found
+            if (user.rows.length === 0) {
+                return res.status (401).send ('Username not found');
+            }
 
-        if (passwordMatch) {
-            const token = jwt.sign ({email : query.email, username : query.username}, secretKey)
-            res.cookie ('jwtAccessToken', token, {httpOnly : true, secure : true, sameSite : 'strict'})
-            res.redirect ('./transactionPage.html')
-        } else {
-            // Passwords do not match
-            res.status (401).send ('Authentication failed');
+            const hashedPassword = user.rows[0]['hash_pass']
+            const passwordMatch = await bcrypt.compare (password, hashedPassword);
+
+            if (passwordMatch) {
+                const token = jwt.sign ({"username" : userData.username, "designation" : designation}, secretKey)
+                res.cookie ('jwtAccessToken', token, {httpOnly : true})
+                res.redirect ('./customerDashboard.html')
+            } else {
+                res.redirect ('./login.html')
+            }
         }
     } catch (error) {
         console.error ('Error in login:', error);

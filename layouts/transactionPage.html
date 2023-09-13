@@ -148,7 +148,7 @@
     </div>
 
     <div class="Deposit"><h4>Deposit Amount</h4>
-        <form action="/deposit" method="post">
+        <form id="depositForm" action="/deposit" method="post">
             <div class="User-Amount">
                 <div>
                     <label for="user">To : </label><br>
@@ -160,12 +160,12 @@
                 </div>
             </div>
             <div>
-                <input class="primary-btn" type="submit" placeholder="Submit" id="depositAmount">
+                <button class="primary-btn" type="submit" onclick="setDeposit()" id="depositAmount">Deposit</button>
             </div>
         </form>
     </div>
     <div class="Withdraw"><h4>Withdraw Amount</h4>
-        <form action="/withdraw" method="post">
+        <form id="withdrawForm" action="/withdraw" name="transactionType" method="post">
             <div class="User-Amount">
                 <div>
                     <label for="user1">From : </label><br>
@@ -182,7 +182,7 @@
         </form>
     </div>
     <div class="Transfer"><h4>Transfer Amount</h4>
-        <form action="/transfer" method="post">
+        <form id="transferForm" action="/transfer" name="transactionType" method="post">
             <div class="User-Amount">
                 <div>
                     <label for="user3">To : </label><br>

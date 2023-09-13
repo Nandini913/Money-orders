@@ -39,3 +39,18 @@ fetch('http://localhost:3000/transactionHistory')
     .catch((error) => {
         console.error('Error fetching table data:', error);
     });
+
+
+function setDeposit() {
+    const form = document.getElementById('depositForm');
+    form.setAttribute("name","deposit")
+    console.log("set deposit");
+}
+
+function setWithdraw(){
+
+}
+
+function setTransfer(){
+
+}
