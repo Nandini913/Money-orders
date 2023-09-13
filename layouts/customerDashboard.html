@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./customerDashboard.css">
+  <title>Customer Dashboard</title>
+</head>
+<body>
+<section>
+  <div class="title">
+    <h1> Transaction History </h1>
+  </div>
+  <div class="transaction-history">
+    <table id="tableData">
+      <thead>
+      <tr>
+        <th>Type</th>
+        <th>From User</th>
+        <th>To User</th>
+        <th>Amount</th>
+      </tr>
+      </thead>
+      <tbody id="history">
+      <tr>
+        <td> Deposit </td>
+        <td> Tejas </td>
+        <td> Nandini </td>
+        <td> 2000 </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="input-container">
+    <label for="noOfRows"> Enter No Of Rows : </label>
+    <input type="number" id="noOfRows" placeholder="">
+  </div>
+  <div>
+    <input class="primary-btn" type="button" value="Submit">
+  </div>
+</section>
+<script src="./javascript/script.js"></script>
+<script src="./javascript/utility.js"></script>
+</body>
+</html>

@@ -4,6 +4,7 @@ fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(usernames => {
         array.forEach((list) => {
+            console.log(list);
             usernames.forEach(username => {
                 const option = document.createElement('option');
                 option.value = username;
@@ -19,23 +20,29 @@ fetch('http://localhost:3000/users')
 
 // transaction History
 
-const tableBody = document.querySelector('#tableData tbody');
+function fetchTransaction() {
 
-// Fetch data from your Node.js server
-fetch('http://localhost:3000/transactionHistory')
-    .then((response) => response.json())
-    .then((data) => {
-        data.forEach((row) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+    const tableBody = document.querySelector('#tableData tbody');
+
+    // Fetch data from your Node.js server
+    fetch('http://localhost:3000/transactionHistory')
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach((row) => {
+                const tr = document.createElement('tr');
+                tr.className = "new-element";
+                tr.innerHTML = `
           <td>${row.type}</td>
           <td>${row.fromuser}</td>
           <td>${row.touser}</td>
           <td>${row.amount} </td>
         `;
-            tableBody.appendChild(tr);
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching table data:', error);
         });
-    })
-    .catch((error) => {
-        console.error('Error fetching table data:', error);
-    });
+}
+
+fetchTransaction();

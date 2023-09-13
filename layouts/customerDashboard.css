@@ -1,0 +1,70 @@
+:root {
+    --bg-primary-color: #007BFF;
+    --bg-secondary-color: #f3c518;
+    --text-primary-color: #f4f4f4;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary-color);
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.title {
+    width: 100vw;
+    background: black;
+    height: 5rem;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+h1 {
+    color: var(--text-primary-color);
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+
+
+table {
+    border: 1px solid black;
+    font-size: small;
+    text-align: center;
+    border-collapse: collapse;
+    background: var(--bg-secondary-color);
+}
+
+
+th, td{
+    border: 1px solid black;
+    padding: 10px;
+}
+
+input {
+    height: 1.8rem;
+    border-radius: 0.2rem;
+    border: none;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 10px;
+}
+
+.primary-btn:hover {
+    background-color: var(--bg-secondary-color);
+    color: #ffff;
+    cursor: pointer;
+}

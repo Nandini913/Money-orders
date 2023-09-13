@@ -4,7 +4,7 @@ const {client} = require("../databaseConn");
 router.use (express.static ("./layouts"))
 router.use(express.urlencoded({ extended: true }));
 router.post('/',async(req,res)=>{
-    const {fromUser , toUser , amount} = req.body;
+    const {fromUser , toUser , amt,type} = req.body;
     console.log(fromUser+" "+toUser);
     const result = await client.query('select max(transactionId) from transaction');
     const maxId = ((parseInt(result.rows[0].max))?parseInt(result.rows[0].max):0)
@@ -12,9 +12,9 @@ router.post('/',async(req,res)=>{
 
     const query = {
         text : 'Insert into transaction (transactionid, type, fromuser, touser, amount) values ($1,$2,$3,$4,$5)',
-        values : [transId ,'Transfer',fromUser,toUser,amount]
+        values : [transId ,type,fromUser,toUser,amt]
     }
     await client.query(query);
-    res.redirect('./transactionPage.html')
+    return res.status(200).json({message : "Deposit Successfull"});
 });
 module.exports = router;

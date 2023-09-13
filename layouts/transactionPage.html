@@ -13,16 +13,19 @@
             margin: 0;
             box-sizing: border-box;
         }
+        .new-element {
+            background-color: white;
+            padding: 0.625rem;
+            margin: 0.315rem;
+            border-radius: 1rem;
+        }
 
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            overflow-x: hidden;
             background-color: var(--bg-primary-color);
         }
 
-        input[type="text"]::placeholder {
+        input[type="number"]::placeholder {
             text-align: center;
         }
 
@@ -31,11 +34,11 @@
         }
 
         .title {
-            width: 100%;
+            width: 100vw;
             background: black;
-            height: 80px;
+            height: 5rem;
             text-align: center;
-            padding: 20px;
+            padding: 1.5rem;
         }
 
         table tr {
@@ -51,7 +54,6 @@
             padding: 0.5em 1.5em 0.5em 1em;
             margin: 0;
             font-size: 1rem;
-            width: 100%;
             height: 2.5rem;
             border-radius: 1rem;
             border: none;
@@ -63,29 +65,31 @@
 
         .grid-container {
             display: grid;
-            width: 95%;
-            height: 100%;
             grid-template-columns: auto auto;
-            padding: 0.625rem;
+            padding: 1rem;
             gap: 0.825rem;
+            align-self: center;
         }
 
         .grid-container > div {
-            background-color: var(--bg-secondary-color);;
+            width: 70%;
+            background-color: var(--bg-secondary-color);
             padding: 1.25rem;
             font-size: 1.875rem;
             text-align: center;
             border-radius: 0.75rem;
+            align-self: center;
         }
 
         .Transactions {
+            display: grid;
             grid-row: 1/4;
             place-self: center;
         }
 
         .User-Amount {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: auto auto;
             justify-content: space-around;
         }
 
@@ -122,6 +126,14 @@
         .primary-btn:hover {
             background-color: var(--bg-primary-color);
             color: #ffff;
+            cursor: pointer;
+        }
+
+        button {
+            width: 90%;
+            height: 2.5rem;
+            border-radius: 1rem;
+            border: none;
         }
     </style>
     <title>Transactions</title>
@@ -129,10 +141,11 @@
 <body>
 
 <div class="title"><h1>Money Ordering Actions</h1></div>
+
 <div class="grid-container">
 
     <div class="Transactions"><h2>Transaction History</h2>
-        <table id="tableData" border="1">
+        <table id="tableData">
             <thead>
             <tr>
                 <th>Type</th>
@@ -141,14 +154,14 @@
                 <th>Amount</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="history">
             <!-- Table data will be inserted here -->
             </tbody>
         </table>
     </div>
 
     <div class="Deposit"><h4>Deposit Amount</h4>
-        <form action="/deposit" method="post">
+        <form id="depositAmt">
             <div class="User-Amount">
                 <div>
                     <label for="user">To : </label><br>
@@ -156,55 +169,57 @@
                 </div>
                 <div>
                     <label for="amount1">Amount : </label><br>
-                    <input type="text" name="amount" id="amount1" placeholder="Enter amount">
+                    <input type="number" name="amount" id="amount1" placeholder="Enter amount">
                 </div>
             </div>
             <div>
-                <input class="primary-btn" type="submit" placeholder="Submit" id="depositAmount">
+                <input class="primary-btn" type="button" value="Deposit" id="depositAmount">
             </div>
         </form>
     </div>
+
     <div class="Withdraw"><h4>Withdraw Amount</h4>
-        <form action="/withdraw" method="post">
+        <form id="withdrawAmt">
             <div class="User-Amount">
                 <div>
-                    <label for="user1">From : </label><br>
-                    <select name="fromUser" id="user1"> </select>
+                    <label for="userForWithdraw">From : </label><br>
+                    <select name="fromUser" id="userForWithdraw"> </select>
                 </div>
                 <div>
                     <label for="amount2">Amount : </label><br>
-                    <input type="text" name="amount" id="amount2" placeholder="Enter amount">
+                    <input type="number" name="amount" id="amount2" placeholder="Enter amount">
                 </div>
             </div>
             <div>
-                <input class="primary-btn" type="submit" placeholder="Submit" id="withdrawAmount">
+                <input class="primary-btn" type="button" value="Withdraw" id="withdrawAmount">
             </div>
         </form>
     </div>
+
     <div class="Transfer"><h4>Transfer Amount</h4>
         <form action="/transfer" method="post">
             <div class="User-Amount">
                 <div>
-                    <label for="user3">To : </label><br>
-                    <select name="toUser" id="user3"> </select>
+                    <label for="toUser">To : </label><br>
+                    <select name="toUser" id="toUser"> </select>
                 </div>
                 <div>
-                    <label for="From-user3">From : </label><br>
-                    <select name="fromUser" id="From-user3"> </select>
+                    <label for="fromUser">From : </label><br>
+                    <select name="fromUser" id="fromUser"> </select>
                 </div>
 
             </div>
             <div>
                 <label for="amount3">Amount : </label><br>
-                <input type="text" name="amount" id="amount3" placeholder="Enter amount">
+                <input type="number" name="amount" id="amount3" placeholder="Enter amount">
             </div>
             <div>
-                <input class="primary-btn" id="transferAmount" type="submit" placeholder="Submit">
+                <input class="primary-btn" id="transferAmount" type="submit" placeholder="Transfer">
             </div>
         </form>
     </div>
-
 </div>
 <script src="./javascript/script.js"></script>
+<script src="./javascript/utility.js"></script>
 </body>
 </html>
