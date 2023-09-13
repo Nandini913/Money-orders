@@ -21,6 +21,8 @@
         }
 
         body {
+            height: 100vh;
+            width: 100vw;
             overflow-x: hidden;
             background-color: var(--bg-primary-color);
         }
@@ -41,10 +43,19 @@
             padding: 1.5rem;
         }
 
-        table tr {
+        table{
             border: 1px solid black;
-            font-size: 1.5rem;
+            font-size: small;
+            text-align: center;
+            border-collapse: collapse;
+            background: var(--bg-secondary-color);
         }
+
+        th, td{
+            border: 1px solid black;
+            padding: 7px;
+        }
+
 
         select {
             background-color: white;
@@ -135,6 +146,11 @@
             border-radius: 1rem;
             border: none;
         }
+
+        input[type="number"]{
+            text-align: center;
+        }
+
     </style>
     <title>Transactions</title>
 </head>

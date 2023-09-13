@@ -55,8 +55,10 @@ const login = async (req, res) => {
             const hashedPassword = user.rows[0]['hash_pass']
             const passwordMatch = await bcrypt.compare (password, hashedPassword);
 
+            console.log(username);
+
             if (passwordMatch) {
-                const token = jwt.sign ({"username" : userData.username, "designation" : designation}, secretKey)
+                const token = jwt.sign ({"username" : user.rows[0].username, "designation" : designation}, secretKey)
                 res.cookie ('jwtAccessToken', token, {httpOnly : true})
                 res.redirect ('./customerDashboard.html')
             } else {

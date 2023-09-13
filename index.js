@@ -12,7 +12,9 @@ const users = require ('./APIS/fetchUsers');
 const transactionHistory = require ('./APIS/transactionHistory');
 const authenticate = require ('./APIS/userValidation')
 const transaction = require('./APIS/transactionAPIS')
+const authMiddleware = require('./middleware/authMiddleware');
 app.use ('/auth', authenticate)
+app.use(authMiddleware);
 app.use ('/deposit', deposit);
 app.use ('/withdraw', withdraw);
 app.use ('/transfer', transfer);

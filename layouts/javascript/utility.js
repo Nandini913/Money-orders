@@ -87,10 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     console.log('Data insertion failed.');
                 }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
             })
             .catch((error) => {
                 console.error('Error inserting data:', error);
