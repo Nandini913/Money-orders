@@ -72,3 +72,21 @@ function fetchTransaction() {
 }
 
 fetchTransaction();
+
+document.getElementById('sendEmail').addEventListener('click', async function(e){
+    e.preventDefault();
+    const limit = document.getElementById('noOfTransaction');
+    await fetch( 'http://localhost:3000/' + 'send-mail/?limit=' + limit.value, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then((res) => {
+        if(res.status === 200) {
+            alert('Mail sent successfully')
+        }else {
+            alert('Some error occurred at backend')
+        }
+    })
+    limit.value = ""
+});
