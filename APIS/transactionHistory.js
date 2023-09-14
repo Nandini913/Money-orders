@@ -3,21 +3,30 @@ const router = express.Router();
 const {client} = require("../databaseConn");
 router.use(express.urlencoded({ extended: true }));
 
+// function removeChild(className) {
+//     const myNode=document.querySelectorAll('.'+className);
+//     myNode.forEach(element=>{
+//         element.remove();
+//     })
+// }
+
 router.get('/',async(req,res)=>{
     try {
         const {username,designation} = req.user;
         let rows ;
         if(designation === "customer"){
             const query = 'SELECT * FROM transaction where fromuser = ($1) OR touser = ($2)'
-             rows  = (await client.query(query,[username,username])).rows;
-        }else{
-            const query = 'SELECT * FROM transaction'; // Replace with your table name
-            rows  = (await client.query(query)).rows;
+            rows  = (await client.query(query,[username,username])).rows;
+            return res.status(200).json({rows, designation });
+        }else {
+            // await removeChild(customer-container);
+            const query = 'SELECT * FROM transaction LIMIT $1'; // Replace with your table name
+            rows = (await client.query(query,[7])).rows;
+            return res.status(200).json({rows,designation});
         }
-        res.json(rows);
     } catch (error) {
         console.error('Error fetching table data from PostgreSQL:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

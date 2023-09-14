@@ -3,7 +3,6 @@ const secretKey = 'userController'
 
 function authMiddleware(req,res,next) {
     const jwtAccessToken = req.cookies["jwtAccessToken"];
-    console.log(jwtAccessToken);
 
     if (!jwtAccessToken) {
         res.redirect('/login.html');

@@ -16,9 +16,78 @@ body {
     overflow-x: hidden;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.customer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin-dashboard > div {
+    width: 60%;
+    padding: 0.5rem;
+    background-color: var(--bg-secondary-color);
+    border-radius: 0.725rem;
+}
+
+.transaction-history {
+    align-self: center;
+}
+
+
+.User-Amount {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.User-Amount div {
+    font-size: large;
+}
+
+.heading {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transferAmountContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 .title {
-    width: 100vw;
     background: black;
+    width: 100%;
     height: 5rem;
     text-align: center;
     padding: 1.5rem;
@@ -28,14 +97,13 @@ h1 {
     color: var(--text-primary-color);
 }
 
-section{
+section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;
 }
-
 
 
 table {
@@ -47,12 +115,12 @@ table {
 }
 
 
-th, td{
+th, td {
     border: 1px solid black;
     padding: 1rem;
 }
 
-.getData{
+.sendTransaction-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -60,8 +128,7 @@ th, td{
     background-color: var(--bg-secondary-color);
     padding: 0.625rem;
     border-radius: 0.625rem;
-    box-shadow: 5px 5px 15px #0a0a0a;
-;
+    box-shadow: 5px 5px 15px #0a0a0a;;
 }
 
 input {
@@ -70,7 +137,14 @@ input {
     border: none;
 }
 
-input[type="number"]{
+
+.User-Amount input{
+    width: 90%;
+    border-radius: 1rem;
+    border: none;
+}
+
+input[type="number"] {
     text-align: center;
 }
 
@@ -83,7 +157,23 @@ input[type="number"]{
 }
 
 .primary-btn:hover {
-    background-color: var(--bg-primary-color);
+    background-color: var(--bg-secondary-color);
     color: #ffff;
     cursor: pointer;
+}
+
+.admin-dashboard input:hover{
+    background-color: var(--bg-primary-color);
+}
+select {
+    background-color: white;
+    display: inline-block;
+    font: inherit;
+    line-height: 1rem;
+    padding: 0.5em 1.5em 0.5em 1em;
+    margin: 0;
+    font-size: 1rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    border: none;
 }

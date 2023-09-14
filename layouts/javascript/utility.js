@@ -1,29 +1,57 @@
-function removeChild(){
+function removeChild() {
     const myNode = document.getElementById("history");
     while (myNode.firstChild) {
         myNode.removeChild(myNode.lastChild);
     }
 }
 
+function fetchTransaction() {
+
+    const tableBody = document.querySelector('#tableData tbody');
+    console.log("hello")
+    // Fetch data from your Node.js server
+    fetch('http://localhost:3000/transactionHistory')
+        .then((response) => {
+            console.log("hello2")
+            return response.json()
+        })
+        .then((data) => {
+            console.log("data", data);
+            data.rows.forEach((row) => {
+                const tr = document.createElement('tr');
+                tr.className = "new-element";
+                tr.innerHTML = `
+          <td>${row.type}</td>
+          <td>${row.fromuser}</td>
+          <td>${row.touser}</td>
+          <td>${row.amount} </td>
+        `;
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching table data:', error);
+        });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const depositButton = document.getElementById('depositAmount');
-    const userName = document.getElementById('user');
+    const deposituserName = document.getElementById('user');
     const depositAmount = document.getElementById('amount1');
 
     depositButton.addEventListener('click', (event) => {
+        removeChild();
 
         event.preventDefault(); // Prevent form submission
 
-        removeChild();
-
         const fromUser = '-';
-        const toUser = userName.value;
+        const toUser = deposituserName.value;
         const amount = depositAmount.value;
         const transactionType = "Deposit";
 
         // Create a JSON object with the data
-        const data = {transactionType,fromUser,toUser,amount};
+        const data = {transactionType, fromUser, toUser, amount};
         console.log(data);
         fetch('http://localhost:3000/transaction', {
             method: 'POST',
@@ -35,16 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((response) => {
                 if (response.ok) {
                     //reset form
-                    userName.value = '';
+                    deposituserName.value = '';
                     amount.value = '';
                 } else {
                     console.log('Data insertion failed.');
                 }
                 return response.json();
-            })
-
-            .then((data) => {
-                console.log(data);
             })
             .catch((error) => {
                 console.error('Error inserting data:', error);
@@ -69,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const transactionType = "Withdraw";
 
         // Create a JSON object with the data
-        const data = {transactionType,fromUser,toUser,amount};
+        const data = {transactionType, fromUser, toUser, amount};
 
 
         fetch('http://localhost:3000/transaction', {
@@ -81,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then((response) => {
                 if (response.ok) {
-                    //reset form
                     withdrawUserName.value = '';
                     withdrawAmount.value = '';
                 } else {
@@ -111,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const transactionType = "Transfer";
 
         // Create a JSON object with the data
-        const data = {transactionType,fromUser,toUser,amount};
+        const data = {transactionType, fromUser, toUser, amount};
 
         fetch('http://localhost:3000/transfer', {
             method: 'POST',
@@ -124,15 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(data);
                 if (response.ok) {
                     //reset form
-                    withdrawUserName.value = '';
-                    withdrawAmount.value = '';
+                    transferFromUserName.value = '';
+                    transferToUserName.value = '';
+                    transferAmount.value = '';
                 } else {
                     console.log('Data insertion failed.');
                 }
                 return response.json();
-            })
-            .then((data) => {
-                console.log(data);
             })
             .catch((error) => {
                 console.error('Error inserting data:', error);

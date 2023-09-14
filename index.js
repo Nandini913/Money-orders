@@ -21,7 +21,6 @@ app.use ('/transfer', transfer);
 app.use ('/users', users);
 app.use ('/transactionHistory', transactionHistory);
 app.use('/transaction',transaction);
-
 app.listen (port, (req, res) => {
     console.log ("Server was running on port 3000");
 });

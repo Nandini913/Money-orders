@@ -39,7 +39,7 @@ const login = async (req, res) => {
                 console.log("Matched admin")
                 const token = jwt.sign ({ "username" : adminData.username,"designation" : designation}, secretKey)
                 res.cookie ('jwtAccessToken', token, {httpOnly : true})
-                res.redirect ('./transactionPage.html')
+                res.redirect ('./customerDashboard.html')
             }
         }
         else {
