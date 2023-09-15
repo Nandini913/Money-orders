@@ -1,11 +1,7 @@
 const {Pool} = require('pg');
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'money-orders',
-    password: 'postgres',
-    port: 5432, // The default PostgreSQL port
+    user: 'postgres', host: 'localhost', database: 'money-orders', password: 'postgres', port: 5432, // The default PostgreSQL port
     multipleStatements: true
 });
 
@@ -23,7 +19,7 @@ async function updateUserBalance(rows) {
             const query2 = `UPDATE transaction
                             SET status = $1
                             where (touser = $2 AND type = $3)`;
-            await pool.query(query2, ['Success', row.touser,row.type]);
+            await pool.query(query2, ['Success', row.touser, row.type]);
             console.log(row.date);
         } else if (row.type === 'Withdraw') {
             if (userBalance > row.amount) {
@@ -33,13 +29,15 @@ async function updateUserBalance(rows) {
                 await pool.query(query1, [row.amount, row.fromuser]);
                 const query2 = `UPDATE transaction
                                 SET status = $1
-                                where fromuser = $2 AND type = $3`;
-                await pool.query(query2, ['Success', row.fromuser,row.type]);
+                                where fromuser = $2
+                                  AND type = $3`;
+                await pool.query(query2, ['Success', row.fromuser, row.type]);
             } else {
                 const query2 = `UPDATE transaction
                                 SET status = $1
-                                where fromuser = $2 AND type = $3`;
-                await pool.query(query2, ['Failed', row.fromuser,row.type]);
+                                where fromuser = $2
+                                  AND type = $3`;
+                await pool.query(query2, ['Failed', row.fromuser, row.type]);
             }
         } else if (row.type === 'Transfer') {
             if (userBalance > row.amount) {
@@ -54,14 +52,18 @@ async function updateUserBalance(rows) {
                 const query3 = `UPDATE transaction
                                 SET status = $1
                                 where fromuser = $2
-                                  AND touser = $3 AND type = $4 AND amount = $5`;
-                await pool.query(query3, ['Success', row.fromuser, row.touser,row.type,row.amount]);
+                                  AND touser = $3
+                                  AND type = $4
+                                  AND amount = $5`;
+                await pool.query(query3, ['Success', row.fromuser, row.touser, row.type, row.amount]);
             } else {
                 const query3 = `UPDATE transaction
                                 SET status = $1
                                 where fromuser = $2
-                                  AND touser = $3 AND type = $4 AND amount = $5`;
-                await pool.query(query3, ['Failed', row.fromuser, row.touser,row.type,row.amount]);
+                                  AND touser = $3
+                                  AND type = $4
+                                  AND amount = $5`;
+                await pool.query(query3, ['Failed', row.fromuser, row.touser, row.type, row.amount]);
             }
         }
     }

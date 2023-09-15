@@ -1,7 +1,7 @@
-const jwt = require ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const secretKey = 'userController'
 
-function authMiddleware(req,res,next) {
+function authMiddleware(req, res, next) {
     const jwtAccessToken = req.cookies["jwtAccessToken"];
 
     if (!jwtAccessToken) {
@@ -24,4 +24,4 @@ function authMiddleware(req,res,next) {
     })
 }
 
-module.exports =  authMiddleware;
+module.exports = authMiddleware;

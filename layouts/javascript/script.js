@@ -33,38 +33,37 @@ function fetchTransaction() {
         })
         .then((data) => {
 
-            if(data.designation === 'admin'){
+            if (data.designation === 'admin') {
                 const myNode = document.getElementById('emailSection');
                 while (myNode.firstChild) {
                     myNode.removeChild(myNode.lastChild);
                 }
 
-            }
-            else{
+            } else {
                 const myNode = document.getElementById('adminSection');
                 while (myNode.firstChild) {
                     myNode.removeChild(myNode.lastChild);
                 }
-                const body=document.getElementById('dashboard');
-                body.style.display="block";
+                const body = document.getElementById('dashboard');
+                body.style.display = "block";
 
                 const container = document.getElementById('left-dashboard');
-                container.style.gap="20px";
+                container.style.gap = "20px";
 
             }
 
             data.rows.forEach((row) => {
-                const tr = document.createElement('tr');
-                tr.className = "new-element";
-                tr.innerHTML = `
+                    const tr = document.createElement('tr');
+                    tr.className = "new-element";
+                    tr.innerHTML = `
                       <td>${row.type}</td>
                       <td>${row.fromuser}</td>
                       <td>${row.touser}</td>
                       <td>${row.amount} </td>
                       <td>${row.status} </td>
                 `;
-                tableBody.appendChild(tr);
-            }
+                    tableBody.appendChild(tr);
+                }
             )
         })
         .catch((error) => {
@@ -74,18 +73,18 @@ function fetchTransaction() {
 
 fetchTransaction();
 
-document.getElementById('sendEmail').addEventListener('click', async function(e){
+document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
     const limit = document.getElementById('noOfTransaction');
-    await fetch( 'http://localhost:3000/' + 'send-mail/?limit=' + limit.value, {
+    await fetch('http://localhost:3000/' + 'send-mail/?limit=' + limit.value, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         },
     }).then((res) => {
-        if(res.status === 200) {
+        if (res.status === 200) {
             alert('Mail sent successfully')
-        }else {
+        } else {
             alert('Some error occurred at backend')
         }
     })

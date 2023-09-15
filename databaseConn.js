@@ -1,4 +1,4 @@
-const { Client } = require('pg');
+const {Client} = require('pg');
 
 const client = new Client({
     user: 'postgres',
@@ -9,7 +9,7 @@ const client = new Client({
 });
 
 client.connect((err) => {
-    if(err) console.log("Error occurred : "+ err.message);
+    if (err) console.log("Error occurred : " + err.message);
     else console.log("Connected");
 });
 
