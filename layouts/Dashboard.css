@@ -16,6 +16,7 @@ body {
     overflow-x: hidden;
 }
 
+
 .container {
     display: flex;
     flex-direction: row;
@@ -29,6 +30,7 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
+    height: 70%;
 }
 
 .customer-container {
@@ -62,6 +64,8 @@ a {
 
 .transaction-history {
     align-self: center;
+    max-height: 32.5rem; /* Adjust this value to your preferred height */
+    overflow: auto;
 }
 
 
@@ -172,7 +176,6 @@ input {
     border: none;
 }
 
-
 .User-Amount input {
     width: 90%;
     border-radius: 1rem;
@@ -182,8 +185,6 @@ input {
 input[type="number"] {
     text-align: center;
 }
-
-
 .primary-btn {
     width: 100%;
     padding: 7px;
