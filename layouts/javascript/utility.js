@@ -12,11 +12,9 @@ function fetchTransaction() {
     // Fetch data from your Node.js server
     fetch('http://localhost:3000/transactionHistory')
         .then((response) => {
-            console.log("hello2")
             return response.json()
         })
         .then((data) => {
-            console.log("data", data);
             data.rows.forEach((row) => {
                 const tr = document.createElement('tr');
                 tr.className = "new-element";
@@ -25,6 +23,7 @@ function fetchTransaction() {
           <td>${row.fromuser}</td>
           <td>${row.touser}</td>
           <td>${row.amount} </td>
+          <td>${row.status}</td>
         `;
                 tableBody.appendChild(tr);
             });
@@ -136,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create a JSON object with the data
         const data = {transactionType, fromUser, toUser, amount};
 
-        fetch('http://localhost:3000/transfer', {
+        fetch('http://localhost:3000/transaction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

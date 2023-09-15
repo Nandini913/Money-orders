@@ -20,8 +20,8 @@ router.get('/',async(req,res)=>{
             return res.status(200).json({rows, designation });
         }else {
             // await removeChild(customer-container);
-            const query = 'SELECT * FROM transaction LIMIT $1'; // Replace with your table name
-            rows = (await client.query(query,[7])).rows;
+            const query = 'SELECT * FROM transaction'; // Replace with your table name
+            rows = (await client.query(query)).rows;
             return res.status(200).json({rows,designation});
         }
     } catch (error) {
