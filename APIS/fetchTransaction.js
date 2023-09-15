@@ -11,18 +11,20 @@ const pool = new Pool({
 
 async function updateUserBalance(rows) {
     for (const row of rows) {
+
         const fetchBalanceQuery = 'SELECT balance from users where username = $1';
         const userBalance = await pool.query(fetchBalanceQuery, [row.fromuser]);
 
         if (row.type === 'Deposit') {
             const query1 = `UPDATE users
                             SET balance = balance + $1
-                            where username = $2;`;
+                            where username = $2`;
             await pool.query(query1, [row.amount, row.touser]);
             const query2 = `UPDATE transaction
                             SET status = $1
-                            where touser = $2`;
-            await pool.query(query2, ['Success', row.touser]);
+                            where (touser = $2 AND type = $3)`;
+            await pool.query(query2, ['Success', row.touser,row.type]);
+            console.log(row.date);
         } else if (row.type === 'Withdraw') {
             if (userBalance > row.amount) {
                 const query1 = `UPDATE users
@@ -31,13 +33,13 @@ async function updateUserBalance(rows) {
                 await pool.query(query1, [row.amount, row.fromuser]);
                 const query2 = `UPDATE transaction
                                 SET status = $1
-                                where fromuser = $2`;
-                await pool.query(query2, ['Success', row.fromuser]);
+                                where fromuser = $2 AND type = $3`;
+                await pool.query(query2, ['Success', row.fromuser,row.type]);
             } else {
                 const query2 = `UPDATE transaction
                                 SET status = $1
-                                where fromuser = $2`;
-                await pool.query(query2, ['Failed', row.fromuser]);
+                                where fromuser = $2 AND type = $3`;
+                await pool.query(query2, ['Failed', row.fromuser,row.type]);
             }
         } else if (row.type === 'Transfer') {
             if (userBalance > row.amount) {
@@ -52,14 +54,14 @@ async function updateUserBalance(rows) {
                 const query3 = `UPDATE transaction
                                 SET status = $1
                                 where fromuser = $2
-                                  AND touser = $3`;
-                await pool.query(query3, ['Success', row.fromuser, row.touser]);
+                                  AND touser = $3 AND type = $4 AND amount = $5`;
+                await pool.query(query3, ['Success', row.fromuser, row.touser,row.type,row.amount]);
             } else {
                 const query3 = `UPDATE transaction
                                 SET status = $1
                                 where fromuser = $2
-                                  AND touser = $3`;
-                await pool.query(query3, ['Failed', row.fromuser, row.touser]);
+                                  AND touser = $3 AND type = $4 AND amount = $5`;
+                await pool.query(query3, ['Failed', row.fromuser, row.touser,row.type,row.amount]);
             }
         }
     }
@@ -72,20 +74,17 @@ async function fetchRows() {
         await pool.connect();
 
         // Your SQL query to fetch rows
-        const query = 'SELECT * FROM transaction where status = $1 LIMIT $2';
+        const query = 'SELECT * FROM transaction where status = $1 ORDER BY date LIMIT $2';
 
         // Execute the query and store the result in a variable
-        const result = await pool.query(query, ['Pending', 2]);
+        const result = await pool.query(query, ['Pending', 4]);
 
         // Store the rows in a variable
         const rows = result.rows;
-
         await updateUserBalance(rows);
 
     } catch (error) {
         console.error('Error fetching rows:', error);
-    } finally {
-        await pool.end();
     }
 }
 

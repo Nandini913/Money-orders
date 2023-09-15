@@ -33,5 +33,5 @@ function poolOperation(){
 if(process.env.APP_NAME === 'api'){
     transaction();
 }else{
-    poolOperation();
+    setInterval(fetchRows,10000);
 }
