@@ -61,6 +61,7 @@ function fetchTransaction() {
                       <td>${row.fromuser}</td>
                       <td>${row.touser}</td>
                       <td>${row.amount} </td>
+                      <td>${row.status} </td>
                 `;
                 tableBody.appendChild(tr);
             }

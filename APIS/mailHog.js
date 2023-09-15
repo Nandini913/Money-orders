@@ -18,9 +18,6 @@ function getTableData(tableData) {
             }</tr>`
         }
     ).join('');
-    console.log("Rows and Headers  ")
-    console.log(tableHeaders);
-    console.log(tableRows);
     return `
         <table border="1">
           <thead>

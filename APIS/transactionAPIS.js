@@ -7,10 +7,10 @@ router.use (express.static ("./layouts"))
 router.use(express.urlencoded({ extended: true }));
 
 router.post('/',async(req,res)=>{
-    const {transactionType,fromUser,toUser,amount} = req.body;
+    const {transactionType,fromUser,toUser,amount,status} = req.body;
     const query = {
-        text : 'Insert into transaction (type, fromuser, touser, amount) values ($1,$2,$3,$4)',
-        values : [transactionType,fromUser,toUser,amount]
+        text : 'Insert into transaction (type, fromuser, touser, amount,status) values ($1,$2,$3,$4,$5)',
+        values : [transactionType,fromUser,toUser,amount,status]
     }
     await client.query(query);
     console.log('Transaction successful');
