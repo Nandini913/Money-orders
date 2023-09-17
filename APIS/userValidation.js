@@ -28,7 +28,6 @@ router.post('/register', register);
 const login = async (req, res) => {
 
     const {username, password} = req.body;
-
     try {
         if (username === 'admin') {
             const adminData = 'Select * from users where designation = $1'
