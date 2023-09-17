@@ -5,6 +5,7 @@ const router = express.Router();
 router.use (express.static ("./layouts"))
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
+
 const transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 1025,
@@ -43,9 +44,10 @@ function generateTable(transaction) {
             </html>
     `;
 }
+
 router.get('/' ,async (req,res) => {
     const username = req.user.username;
-    const { limit } = req.body;
+    const { limit } = req.query;
     const result = await client.query(`SELECT user_id , email from users WHERE username = $1`, [username]);
     const to_email = result.rows[0].email;
     const query = 'SELECT * FROM transaction where fromuser = ($1) OR touser = ($1) LIMIT $2'

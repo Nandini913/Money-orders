@@ -3,13 +3,6 @@ const router = express.Router();
 const {client} = require("../databaseConn");
 router.use(express.urlencoded({extended: true}));
 
-// function removeChild(className) {
-//     const myNode=document.querySelectorAll('.'+className);
-//     myNode.forEach(element=>{
-//         element.remove();
-//     })
-// }
-
 router.get('/', async (req, res) => {
     try {
         const {username, designation} = req.user;

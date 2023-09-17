@@ -1,7 +1,7 @@
 require('dotenv').config();
-const {fetchRows} = require('./APIS/fetchTransaction'); // Assuming both files are in the same directory
+const {transactionProcessing} = require('./APIS/fetchTransaction'); // Assuming both files are in the same directory
 
-function transaction() {
+function userTransaction() {
     const express = require('express');
     const app = express();
     const port = 3000;
@@ -26,12 +26,9 @@ function transaction() {
     });
 }
 
-function poolOperation() {
-    fetchRows();
-}
-
-if (process.env.APP_NAME === 'api') {
-    transaction();
+if (process.env.APP_NAME === 'userTransaction') {
+    userTransaction();
 } else {
-    setInterval(fetchRows, 10000);
+    setInterval(transactionProcessing, 10000);
+    // transactionProcessing();
 }

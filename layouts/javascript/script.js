@@ -5,7 +5,6 @@ fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(usernames => {
         array.forEach((list) => {
-            console.log(list);
             usernames.forEach(username => {
                 const option = document.createElement('option');
                 option.value = username;
@@ -24,11 +23,9 @@ fetch('http://localhost:3000/users')
 function fetchTransaction() {
 
     const tableBody = document.querySelector('#tableData tbody');
-    console.log("hello")
     // Fetch data from your Node.js server
     fetch('http://localhost:3000/transactionHistory')
         .then((response) => {
-            console.log("hello2")
             return response.json()
         })
         .then((data) => {
@@ -53,18 +50,17 @@ function fetchTransaction() {
             }
 
             data.rows.forEach((row) => {
-                    const tr = document.createElement('tr');
-                    tr.className = "new-element";
-                    tr.innerHTML = `
+                const tr = document.createElement('tr');
+                tr.className = "new-element";
+                tr.innerHTML = `
                       <td>${row.type}</td>
                       <td>${row.fromuser}</td>
                       <td>${row.touser}</td>
                       <td>${row.amount} </td>
                       <td>${row.status} </td>
                 `;
-                    tableBody.appendChild(tr);
-                }
-            )
+                tableBody.appendChild(tr);
+            })
         })
         .catch((error) => {
             console.error('Error fetching table data:', error);
@@ -77,8 +73,7 @@ document.getElementById('sendEmail').addEventListener('click', async function (e
     e.preventDefault();
     const limit = document.getElementById('noOfTransaction');
     await fetch('http://localhost:3000/' + 'send-mail/?limit=' + limit.value, {
-        method: "GET",
-        headers: {
+        method: "GET", headers: {
             "Content-Type": "application/json"
         },
     }).then((res) => {
