@@ -23,4 +23,25 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+router.get('/email', async (req, res) => {
+    try {
+        const {designation,email} = req.user;
+        let rows;
+        if (designation === "customer") {
+            const query = 'SELECT * FROM email where touser = ($1) ORDER BY id'
+            rows = (await client.query(query, [email])).rows;
+            return res.status(200).json({rows, designation});
+        } else {
+            // await removeChild(customer-container);
+            const query = 'SELECT * FROM email'; // Replace with your table name
+            rows = (await client.query(query)).rows;
+            return res.status(200).json({rows, designation});
+        }
+    } catch (error) {
+        console.error('Error fetching table data from PostgreSQL:', error);
+        return res.status(500).json({error: 'Internal Server Error'});
+    }
+});
+
 module.exports = router;

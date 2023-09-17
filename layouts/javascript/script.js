@@ -41,11 +41,14 @@ function fetchTransaction() {
                 while (myNode.firstChild) {
                     myNode.removeChild(myNode.lastChild);
                 }
+
                 const body = document.getElementById('dashboard');
-                body.style.display = "block";
+                body.style.display = "flex";
+                body.style.gap = "40px";
+
 
                 const container = document.getElementById('left-dashboard');
-                container.style.gap = "20px";
+                container.style.gap = "40px";
 
             }
 
@@ -69,6 +72,30 @@ function fetchTransaction() {
 
 fetchTransaction();
 
+function fetchEmails(){
+    const tableBody = document.querySelector('#emailTableData tbody');
+    fetch('http://localhost:3000/transactionHistory/email')
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            data.rows.forEach((row) => {
+                const tr = document.createElement('tr');
+                tr.className = "new-element";
+                tr.innerHTML = `
+                      <td>${row.touser}</td>
+                      <td>${row.nooftransaction}</td>
+                      <td>${row.status}</td>
+                `;
+                tableBody.appendChild(tr);
+            })
+        })
+        .catch((error) => {
+            console.error('Error fetching table data:', error);
+        });
+}
+
+fetchEmails();
 document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
     const limit = document.getElementById('noOfTransaction');

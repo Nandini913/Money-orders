@@ -19,6 +19,7 @@ function authMiddleware(req, res, next) {
         req.user = {
             username: user.username,
             designation: user.designation,
+            email : user.email,
         }
         next();
     })
