@@ -85,6 +85,7 @@ async function transactionProcessing() {
         // Store the rows in a variable
         const rows = result.rows;
         await updateUserBalance(rows);
+
     } catch (error) {
         console.error('Error fetching rows:', error);
     }

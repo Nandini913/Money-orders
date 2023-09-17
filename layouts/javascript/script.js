@@ -36,6 +36,11 @@ function fetchTransaction() {
                     myNode.removeChild(myNode.lastChild);
                 }
 
+                const emailSection = document.getElementById("emailHistory")
+                while (emailSection.firstChild) {
+                    emailSection.removeChild(emailSection.lastChild);
+                }
+
             } else {
                 const myNode = document.getElementById('adminSection');
                 while (myNode.firstChild) {
