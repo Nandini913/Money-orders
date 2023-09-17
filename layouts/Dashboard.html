@@ -34,10 +34,10 @@
             <div class="customer-container" id="emailSection">
                 <div class="input-container">
                     <label for="noOfTransaction"> Enter No Of Transaction : </label>
-                    <input type="number" id="noOfTransaction" placeholder="">
+                    <input type="number" name="limit" id="noOfTransaction" placeholder="">
                 </div>
                 <div>
-                    <input id="sendEmail" class="primary-btn" type="button" value="Get Email">
+                    <input id="sendEmail" class="primary-btn" type="submit" value="Get Email">
                 </div>
             </div>
         </div>
@@ -123,5 +123,6 @@
 <script type="module" src="./javascript/script.js"></script>
 <script type="module" src="./javascript/utility.js"></script>
 <script type="module" src="../APIS/fetchTransaction.js"></script>
+<script type="module" src ="../APIS/emailService.js"></script>
 </body>
 </html>

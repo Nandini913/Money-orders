@@ -84,7 +84,7 @@ function fetchEmails(){
                 tr.className = "new-element";
                 tr.innerHTML = `
                       <td>${row.touser}</td>
-                      <td>${row.nooftransaction}</td>
+                      <td>${row.numberoftransactions}</td>
                       <td>${row.status}</td>
                 `;
                 tableBody.appendChild(tr);
@@ -98,16 +98,17 @@ function fetchEmails(){
 fetchEmails();
 document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
-    const limit = document.getElementById('noOfTransaction');
-    await fetch('http://localhost:3000/' + 'send-mail/?limit=' + limit.value, {
-        method: "GET", headers: {
+    const limit = document.getElementById('noOfTransaction').value;
+    await fetch('http://localhost:3000/' + 'send-mail/', {
+        method: "POST", headers: {
             "Content-Type": "application/json"
         },
+        body : JSON.stringify({limit : limit})
     }).then((res) => {
         if (res.status === 200) {
-            alert('Mail sent successfully')
+            alert('Mail sent')
         } else {
-            alert('Some error occurred at backend')
+            alert('Error!!')
         }
     })
     limit.value = ""
