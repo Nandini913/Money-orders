@@ -55,8 +55,8 @@ a {
 }
 
 .admin-dashboard > div {
-    width: 60%;
-    padding: 0.5rem;
+    width: 80%;
+    padding: 0.3rem;
     background-color: var(--bg-secondary-color);
     border-radius: 0.725rem;
     box-shadow: 2px 3px 8px black;
@@ -66,13 +66,15 @@ a {
     align-self: center;
     max-height: 32.5rem; /* Adjust this value to your preferred height */
     overflow: auto;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 7px 8px 20px black;
+    border-radius: 1rem;
 }
-
-
 
 .email-history {
     align-self: center;
-    width: 85.1%;
+    width: 90.5%;
     max-height: 20rem; /* Adjust this value to your preferred height */
     overflow: auto;
 }
@@ -198,11 +200,10 @@ input[type="number"] {
 }
 
 .primary-btn {
-    width: 100%;
+    width: 60%;
     padding: 7px;
     border-radius: 0.75rem;
-    text-align: center;
-    align-items: center;
+    align-self: center;
 }
 
 .primary-btn:hover {
@@ -231,7 +232,7 @@ select {
 }
 
 .inputData{
-    width: 90px;
+    width: 100px;
     height: 30px;
     font-size: smaller;
 }
@@ -251,4 +252,9 @@ select {
 
 input[type="number"]:hover {
     background-color: #ffff;
+}
+
+.button-div{
+    display: flex;
+    justify-content: center;
 }

@@ -7,20 +7,20 @@ function removeChild() {
 
 function fetchTransaction() {
     const tableBody = document.querySelector('#tableData tbody');
-    console.log("hello")
     // Fetch data from your Node.js server
     fetch('http://localhost:3000/transactionHistory')
         .then((response) => {
             return response.json()
         })
         .then((data) => {
+            console.log(data);
             data.rows.forEach((row) => {
                 const tr = document.createElement('tr');
                 tr.className = "new-element";
                 tr.innerHTML = `
           <td>${row.type}</td>
-          <td>${row.fromuser}</td>
-          <td>${row.touser}</td>
+          <td>${row.transactionfromuser}</td>
+          <td>${row.transactiontouser}</td>
           <td>${row.amount} </td>
           <td>${row.status}</td>
         `;
@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeChild();
 
-
         const fromUser = withdrawUserName.value;
         const toUser = '-';
         const amount = withdrawAmount.value;
@@ -92,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create a JSON object with the data
         const data = {transactionType, fromUser, toUser, amount};
-
 
         fetch('http://localhost:3000/transaction', {
             method: 'POST',

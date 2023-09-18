@@ -29,39 +29,28 @@ const login = async (req, res) => {
 
     const {username, password} = req.body;
     try {
-        if (username === 'admin') {
-            const adminData = 'Select * from users where designation = $1'
-            const admin = await client.query(adminData, [username])
-            const designation = admin.rows[0].designation;
-            const email = admin.rows[0].email;
-            const adminPass = admin.rows[0]['hash_pass'];
-            if (password === adminPass) {
-                console.log("Matched admin")
-                const token = jwt.sign({"username": adminData.username, "designation": designation,"email":email}, secretKey)
-                res.cookie('jwtAccessToken', token, {httpOnly: true})
-                res.redirect('./Dashboard.html')
-            }
+        const userData = 'Select * from users where username = $1'
+        const user = await client.query(userData , [username]);
+        if (user.rows.length === 0) {
+            return res.status(401).send('Username not found');
+        }
+        const designation = user.rows[0].designation;
+        const userPassword = user.rows[0]['hash_pass']
+        const email = user.rows[0].email;
+        let passwordMatch = false;
+        if(designation === 'admin'){
+            passwordMatch = (password === userPassword);
+        }
+        else {
+            passwordMatch = await bcrypt.compare (password, userPassword);
+        }
+        if (passwordMatch) {
+            const token = jwt.sign({"username": user.rows[0].username, "designation": designation,"email":email}, secretKey)
+            res.cookie('jwtAccessToken', token, {httpOnly: true})
+            res.redirect('./Dashboard.html')
         } else {
-            const userData = 'Select * from users where username = $1'
-            const user = await client.query(userData, [username]);
-            const email = user.rows[0].email;
-            console.log(email);
-            const designation = user.rows[0].designation;
-            // Check if a user with the given username was found
-            if (user.rows.length === 0) {
-                return res.status(401).send('Username not found');
-            }
-
-            const hashedPassword = user.rows[0]['hash_pass']
-            const passwordMatch = await bcrypt.compare(password, hashedPassword);
-
-            if (passwordMatch) {
-                const token = jwt.sign({"username": user.rows[0].username, "designation": designation,"email":email}, secretKey)
-                res.cookie('jwtAccessToken', token, {httpOnly: true})
-                res.redirect('./Dashboard.html')
-            } else {
-                res.redirect('./login.html')
-            }
+            alert("Incorrect Credentials");
+            res.redirect('./login.html')
         }
     } catch (error) {
         console.error('Error in login:', error);

@@ -76,8 +76,8 @@ function fetchTransaction() {
                 tr.className = "new-element";
                 tr.innerHTML = `
                       <td>${row.type}</td>
-                      <td>${row.fromuser}</td>
-                      <td>${row.touser}</td>
+                      <td>${row.transactionfromuser}</td>
+                      <td>${row.transactiontouser}</td>
                       <td>${row.amount} </td>
                       <td>${row.status} </td>
                 `;
@@ -108,7 +108,7 @@ function fetchEmails() {
                 const tr = document.createElement('tr');
                 tr.className = "new-element";
                 tr.innerHTML = `
-                      <td>${row.touser}</td>
+                      <td>${row.emailrecepient}</td>
                       <td>${row.numberoftransactions}</td>
                       <td>${row.status}</td>
                 `;
@@ -121,7 +121,7 @@ function fetchEmails() {
 }
 
 fetchEmails();
-setInterval(fetchEmails,5000);
+setInterval(fetchEmails,10000);
 document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
     removeChild();

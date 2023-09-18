@@ -11,6 +11,12 @@ router.post('/', async (req, res) => {
         values: [transactionType, fromUser, toUser, amount]
     }
     await client.query(query);
+
+    const query1 = {
+        text : 'insert into processes (type,transactionfromuser,transactiontouser,amount) values ($1,$2,$3,$4)',
+        values : [transactionType,fromUser,toUser,amount],
+    }
+    await client.query(query1);
     console.log('Transaction successful');
 });
 

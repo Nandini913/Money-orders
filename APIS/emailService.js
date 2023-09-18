@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
     secure: false,
 });
 function getTableData(tableData) {
-    const headers = ['type','fromuser','touser','amount'];
+    const headers = ['type','transactionfromuser','transactiontouser','amount'];
     const tableHeaders = headers.map(header => `<th>${header}</th>`).join('');
     const tableRows = tableData.map(row => {
             return `<tr>${headers.map (header => `<td>${row[header] || ""}</td>`).join ('')
@@ -54,7 +54,7 @@ async function serveEmails(numberofTransactions ,receiver){
         const username = result.rows[0].username
         const toEmail = result.rows[0].email;
         const fromEmail = "admin@gmail.com"
-        const query = 'SELECT * FROM transaction where fromuser = ($1) OR touser = ($1) LIMIT $2'
+        const query = 'SELECT * FROM processes where transactionfromuser = ($1) OR transactiontouser = ($1) LIMIT $2'
         const transactions  = (await client.query(query,[username,numberofTransactions]));
         const allTransactions = generateTable(transactions.rows);
         return await transporter.sendMail({
@@ -71,19 +71,19 @@ async function serveEmails(numberofTransactions ,receiver){
 
 async function emailProcessing() {
     const batchSize = 5;
-    const emailQuery = `Select * from email where status = 'Pending' limit $1`
-    const emailsReceived = await pool.query (emailQuery, [batchSize]);
-
+    const emailQuery = `Select * from processes where status = 'Pending' AND type = $2 limit $1`
+    const emailsReceived = await pool.query (emailQuery, [batchSize,'Email']);
 
     //process the emails received
     for(const email of emailsReceived.rows){
-       const emailProcessed = await serveEmails(email.numberoftransactions , email.touser);
+       console.log(email);
+       const emailProcessed = await serveEmails(email.numberoftransactions , email.emailrecepient);
        let emailStatus = "Processed";
        if(!emailProcessed){
            emailStatus = "failed"
        }
 
-       await pool.query('Update email set status = $1 where id = $2',[emailStatus,email.id]);
+       await pool.query('Update processes set status = $1 where id = $2',[emailStatus,email.id]);
     }
 }
 
