@@ -68,6 +68,15 @@ a {
     overflow: auto;
 }
 
+
+
+.email-history {
+    align-self: center;
+    width: 85.1%;
+    max-height: 20rem; /* Adjust this value to your preferred height */
+    overflow: auto;
+}
+
 .User-Amount {
     display: flex;
     flex-direction: row;
@@ -176,13 +185,16 @@ input {
 }
 
 .User-Amount input {
-    width: 90%;
+    width: 90px;
+    height: 30px;
     border-radius: 1rem;
     border: none;
+    font-size: small;
 }
 
 input[type="number"] {
     text-align: center;
+    font-size: small;
 }
 
 .primary-btn {
@@ -210,12 +222,32 @@ select {
     line-height: 1rem;
     padding: 0.5em 1.5em 0.5em 1em;
     margin: 0;
-    font-size: 1rem;
-    height: 2.5rem;
     border-radius: 1rem;
     border: none;
+    width: 100px;
+    height: 30px;
+    font-size: small;
+
 }
 
+.inputData{
+    width: 90px;
+    height: 30px;
+    font-size: smaller;
+}
+
+.inputData::placeholder{
+    font-size: smaller;
+    padding: 10px;
+}
+
+#amount3{
+    align-self: center;
+}
+
+.transferAmountContainer{
+    gap:5px;
+}
 
 input[type="number"]:hover {
     background-color: #ffff;

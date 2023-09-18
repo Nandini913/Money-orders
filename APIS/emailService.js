@@ -2,10 +2,10 @@ const nodemailer = require('nodemailer');
 const {Pool} = require('pg');
 const {client} = require ("../databaseConn");
 const pool = new Pool({
-    user: 'nandini',
+    user: 'postgres',
     host: 'localhost',
     database: 'money-orders',
-    password: 'nandu@913',
+    password: 'postgres',
     port: 5432, // The default PostgreSQL port
     multipleStatements: true
 });
@@ -51,7 +51,6 @@ function generateTable(transaction) {
 async function serveEmails(numberofTransactions ,receiver){
     try{
         const result = await pool.query(`SELECT username , email from users WHERE email = $1 `, [receiver])
-        console.log(result.rows)
         const username = result.rows[0].username
         const toEmail = result.rows[0].email;
         const fromEmail = "admin@gmail.com"
@@ -64,7 +63,6 @@ async function serveEmails(numberofTransactions ,receiver){
             subject: "Transactions List",
             html: allTransactions
         })
-
     }
     catch (e){
         return e;
@@ -75,6 +73,7 @@ async function emailProcessing() {
     const batchSize = 5;
     const emailQuery = `Select * from email where status = 'Pending' limit $1`
     const emailsReceived = await pool.query (emailQuery, [batchSize]);
+
 
     //process the emails received
     for(const email of emailsReceived.rows){

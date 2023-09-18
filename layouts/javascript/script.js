@@ -1,6 +1,14 @@
 const userDropdown = document.getElementsByTagName('select');
 const array = Array.prototype.slice.call(userDropdown);
 
+function removeChild() {
+    const myNode = document.getElementById("email-history");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+    fetchEmails();
+}
+
 fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(usernames => {
@@ -23,6 +31,12 @@ fetch('http://localhost:3000/users')
 function fetchTransaction() {
 
     const tableBody = document.querySelector('#tableData tbody');
+
+    const myNode = document.getElementById("history");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+
     // Fetch data from your Node.js server
     fetch('http://localhost:3000/transactionHistory')
         .then((response) => {
@@ -76,9 +90,15 @@ function fetchTransaction() {
 }
 
 fetchTransaction();
-
-function fetchEmails(){
+setInterval(fetchTransaction,10000);
+function fetchEmails() {
     const tableBody = document.querySelector('#emailTableData tbody');
+
+    const myNode = document.getElementById("email-history");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+
     fetch('http://localhost:3000/transactionHistory/email')
         .then((response) => {
             return response.json()
@@ -101,14 +121,16 @@ function fetchEmails(){
 }
 
 fetchEmails();
+setInterval(fetchEmails,5000);
 document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
+    removeChild();
     const limit = document.getElementById('noOfTransaction').value;
-    await fetch('http://localhost:3000/' + 'send-mail/', {
+    await fetch('http://localhost:3000/send-mail', {
         method: "POST", headers: {
             "Content-Type": "application/json"
         },
-        body : JSON.stringify({limit : limit})
+        body: JSON.stringify({limit: limit})
     }).then((res) => {
         if (res.status === 200) {
             alert('Mail sent')
@@ -116,5 +138,6 @@ document.getElementById('sendEmail').addEventListener('click', async function (e
             alert('Error!!')
         }
     })
-    limit.value = ""
+    limit.value = '';
+    fetchEmails();
 });

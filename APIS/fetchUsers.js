@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/current', (req, res) => {
-    console.log(req.user);
     res.json(req.user);
 })
 

@@ -6,7 +6,6 @@ function removeChild() {
 }
 
 function fetchTransaction() {
-
     const tableBody = document.querySelector('#tableData tbody');
     console.log("hello")
     // Fetch data from your Node.js server
