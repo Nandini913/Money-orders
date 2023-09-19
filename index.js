@@ -1,16 +1,16 @@
 require('dotenv').config();
-const {transactionProcessing} = require('./APIS/fetchTransaction'); // Assuming both files are in the same directory
-const {emailProcessing } = require('./APIS/emailService')
+const {transactionProcessing} = require('./APIS/transaction_processing'); // Assuming both files are in the same directory
+const {emailProcessing } = require('./APIS/email_service')
 const cookieParser = require ("cookie-parser");
 function userTransaction() {
     const express = require('express');
     const app = express();
     const port = 3000;
     const cookieParser = require('cookie-parser');
-    const users = require('./APIS/fetchUsers');
-    const transactionHistory = require('./APIS/transactionHistory');
-    const authenticate = require('./APIS/userValidation')
-    const transaction = require('./APIS/transactionAPIS')
+    const users = require('./APIS/fetch_users');
+    const transactionHistory = require('./APIS/transaction_data');
+    const authenticate = require('./APIS/user_validation')
+    const transaction = require('./APIS/transaction_service')
     const authMiddleware = require('./middleware/authMiddleware');
     const mailhog = require('./APIS/mailHog.js')
     app.use(cookieParser());

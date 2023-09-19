@@ -16,6 +16,7 @@
     <div class="container" id="dashboard">
         <div class="left-container" id="left-dashboard">
             <div class="transaction-history">
+                <h3> Transaction History </h3>
                 <table id="tableData">
                     <thead>
                     <tr>
@@ -29,20 +30,21 @@
                     <tbody id="history">
                     </tbody>
                 </table>
+                <div class="customer-container" id="emailSection">
+                    <div class="input-container">
+                        <label for="noOfTransaction"> Enter No Of Transaction : </label>
+                        <input type="number" name="limit" id="noOfTransaction" placeholder="">
+                    </div>
+                    <div>
+                        <input id="sendEmail" class="email-button" type="submit" value="Get Email">
+                    </div>
+                </div>
             </div>
 
-            <div class="customer-container" id="emailSection">
-                <div class="input-container">
-                    <label for="noOfTransaction"> Enter No Of Transaction : </label>
-                    <input type="number" name="limit" id="noOfTransaction" placeholder="">
-                </div>
-                <div>
-                    <input id="sendEmail" class="primary-btn" type="submit" value="Get Email">
-                </div>
-            </div>
         </div>
 
         <div class="email-history" id="emailHistory">
+            <h3> Email History </h3>
             <table id="emailTableData">
                 <thead>
                 <tr>
@@ -120,7 +122,6 @@
         </div>
     </div>
 </section>
-<script type="module" src="./javascript/script.js"></script>
 <script type="module" src="./javascript/utility.js"></script>
 <script type="module" src="../APIS/fetchTransaction.js"></script>
 <script type="module" src ="../APIS/emailService.js"></script>
