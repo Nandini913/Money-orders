@@ -1,5 +1,5 @@
 // fetch users list
-function fetchUsersList(){
+function fetchUsersList() {
     const userDropdown = document.getElementsByTagName('select');
     const array = Array.prototype.slice.call(userDropdown);
 
@@ -19,12 +19,13 @@ function fetchUsersList(){
             console.error('Error fetching usernames:', error);
         });
 }
+
 fetchUsersList();
 
 //show dashboard according to role
 function showDashboard() {
     const tableBody = document.querySelector('#tableData tbody');
-    // Fetch data from your Node.js server
+    // Fetch data from our Node.js server
     fetch('http://localhost:3000/transactionHistory')
         .then((response) => {
             return response.json()
@@ -56,10 +57,11 @@ function showDashboard() {
             console.error('Error fetching table data:', error);
         });
 }
+
 showDashboard();
 
 // fetch new data from database
-function fetchNewData(){
+function fetchNewData() {
     fetch('http://localhost:3000/transactionHistory/newTransaction')
         .then((response) => {
             return response.json()
@@ -81,8 +83,10 @@ function fetchNewData(){
             })
         })
 }
+
 fetchNewData();
-setInterval(fetchNewData,1000);
+setInterval(fetchNewData, 10000);
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const depositButton = document.getElementById('depositAmount');
@@ -121,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 console.error('Error inserting data:', error);
             });
+        fetchNewData();
     });
 
     const withdrawButton = document.getElementById("withdrawAmount");
@@ -157,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 console.error('Error inserting data:', error);
             });
+        fetchNewData();
     });
 
     const transferButton = document.getElementById("transferAmount");
@@ -184,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(data),
         })
             .then((response) => {
-                console.log(data);
                 if (response.ok) {
                     //reset form
                     transferFromUserName.value = '';
@@ -198,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((error) => {
                 console.error('Error inserting data:', error);
             });
+        fetchNewData();
     });
 });
 
@@ -226,12 +232,12 @@ function fetchEmails() {
 }
 
 fetchEmails();
-setInterval(fetchEmails,3000);
+setInterval(fetchEmails, 3000);
 
 document.getElementById('sendEmail').addEventListener('click', async function (e) {
     e.preventDefault();
     const limitValue = document.getElementById('noOfTransaction');
-    await fetch('http://localhost:3000/' +  'send-mail/?limit=' + limitValue.value, {
+    await fetch('http://localhost:3000/' + 'send-mail/?limit=' + limitValue.value, {
         method: "POST", headers: {
             "Content-Type": "application/json"
         },
