@@ -1,15 +1,6 @@
 const nodemailer = require('nodemailer');
-const {Pool} = require('pg');
 const {client} = require("../databaseConn");
 
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'money-orders',
-    password: 'postgres',
-    port: 5432, // The default PostgreSQL port
-    multipleStatements: true
-});
 
 const transporter = nodemailer.createTransport({
     host: 'localhost',
@@ -54,7 +45,7 @@ function generateTable(transaction) {
 
 async function serveEmails(numberofTransactions, receiver) {
     try {
-        const result = await pool.query(`SELECT username , email from users WHERE email = $1 `, [receiver])
+        const result = await client.query(`SELECT username , email from users WHERE email = $1 `, [receiver])
         const username = result.rows[0].username
         const toEmail = result.rows[0].email;
         const fromEmail = "admin@gmail.com"
@@ -79,7 +70,7 @@ async function emailProcessing() {
                         where status = 'Pending'
                           AND type = $2
                         limit $1`
-    const emailsReceived = await pool.query(emailQuery, [batchSize, 'Email']);
+    const emailsReceived = await client.query(emailQuery, [batchSize, 'Email']);
 
     //process the emails received
     for (const email of emailsReceived.rows) {
@@ -88,7 +79,7 @@ async function emailProcessing() {
         if (!emailProcessed) {
             emailStatus = "failed"
         }
-        await pool.query('Update processes set status = $1 where id = $2', [emailStatus, email.id]);
+        await client.query('Update processes set status = $1 where id = $2', [emailStatus, email.id]);
     }
 }
 
